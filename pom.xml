@@ -205,6 +205,8 @@
 					<version>3.6.0</version>
 					<configuration>
 						<configLocation>checkstyle.xml</configLocation>
+						<!-- Only error-severity rules fail the build; see the ratchet note in checkstyle.xml -->
+						<violationSeverity>error</violationSeverity>
 					</configuration>
 				</plugin>
 				<plugin>

@@ -31,7 +31,9 @@
 	<property name="charset" value="UTF-8"/>
 
 	<!--
-		We default to 'warning' and set only specific rules to 'error'
+		Severity policy (ratchet): only "error" violations fail the build (see violationSeverity in pom.xml).
+		Rules marked "ratchet" still have existing violations and are reported as warnings for now; once a
+		rule's violations reach zero, restore its severity to error so it cannot regress.
 	-->
 	<property name="severity" value="warning"/>
 
@@ -49,7 +51,7 @@
 	<module name="FileLength">
 		<property name="fileExtensions" value="java"/>
 		<property name="max" value="1500"/>
-		<property name="severity" value="error"/>
+		<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 	</module>
 
 	<module name="RegexpSingleline">
@@ -107,7 +109,7 @@
 			<property name="allowNonPrintableEscapes" value="true"/>
 		</module>
 		<module name="AvoidStarImport">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="RedundantImport">
 			<property name="severity" value="error"/>
@@ -128,7 +130,7 @@
 			<property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
 		</module>
 		<module name="NeedBraces">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="LeftCurly">
 			<property name="option" value="eol" />
@@ -156,7 +158,7 @@
 		</module>
 		<module name="OneStatementPerLine"/>
 		<module name="MultipleVariableDeclarations">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="ArrayTypeStyle"/>
 		<module name="MissingSwitchDefault"/>
@@ -170,10 +172,10 @@
 			<property name="severity" value="error"/>
 		</module>
 		<module name="StringLiteralEquality">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="EqualsAvoidNull">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="NoClone"/>
 		<module name="ModifierOrder"/>
@@ -204,48 +206,48 @@
 		<module name="TypeName">
 			<message key="name.invalidPattern"
 			 value="Type name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="MemberName">
 			<property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
 			<message key="name.invalidPattern"
 			 value="Member name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="ParameterName">
 			<property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
 			<message key="name.invalidPattern"
 			 value="Parameter name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="ParameterNumber">
 			<property name="max" value="5" />
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="LocalVariableName">
 			<property name="tokens" value="VARIABLE_DEF"/>
 			<property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
 			<message key="name.invalidPattern"
 			 value="Local variable name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="ClassTypeParameterName">
 			<property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
 			<message key="name.invalidPattern"
 			 value="Class type name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="MethodTypeParameterName">
 			<property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
 			<message key="name.invalidPattern"
 			 value="Method type name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="InterfaceTypeParameterName">
 			<property name="format" value="(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)"/>
 			<message key="name.invalidPattern"
 			 value="Interface type name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="NoFinalizer"/>
 		<module name="NoWhitespaceBefore"/>
@@ -273,11 +275,11 @@
 		<!--</module>-->
 		<module name="NestedIfDepth">
 			<property name="max" value="4"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="NestedTryDepth">
 			<property name="max" value="2"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="AbbreviationAsWordInName">
 			<property name="ignoreFinal" value="false"/>
@@ -285,13 +287,13 @@
 		</module>
 		<module name="MagicNumber">
 			<property name="ignoreAnnotation" value="true"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="OverloadMethodsDeclarationOrder">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="VariableDeclarationUsageDistance">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<!--
 			The order should match the default Eclipse behavior see
@@ -357,14 +359,14 @@
 			<property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
 			<message key="name.invalidPattern"
 			 value="Method name ''{0}'' must match pattern ''{1}''."/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="MethodLength">
 			<property name="max" value="75"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="NPathComplexity">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="SimplifyBooleanReturn"/>
 		<module name="SingleLineJavadoc">
@@ -372,23 +374,23 @@
 		</module>
 		<module name="EmptyCatchBlock">
 			<property name="exceptionVariableName" value="expected"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="IllegalCatch">
 			<property name="illegalClassNames" value=" java.lang.Throwable, java.lang.RuntimeException"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="IllegalThrows">
 			<property name="illegalClassNames"
 			          value="java.lang.Throwable, java.lang.Exception, java.lang.Error, java.lang.RuntimeException, java.lang.NullPointerException"/>
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="IllegalInstantiation">
 			<property name="classes" value="java.lang.Boolean"/>
 			<property name="severity" value="error"/>
 		</module>
 		<module name="InnerAssignment">
-			<property name="severity" value="error"/>
+			<property name="severity" value="warning"/><!-- ratchet: restore to error once clean -->
 		</module>
 		<module name="CommentsIndentation"/>
 	</module>

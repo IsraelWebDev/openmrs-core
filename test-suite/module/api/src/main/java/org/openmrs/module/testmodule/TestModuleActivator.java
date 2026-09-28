@@ -9,17 +9,17 @@
  */
 package org.openmrs.module.testmodule;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.BaseModuleActivator;
 import org.openmrs.module.ModuleActivator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
 public class TestModuleActivator extends BaseModuleActivator {
 
-	protected Log log = LogFactory.getLog(getClass());
+	private static final Logger log = LoggerFactory.getLogger(TestModuleActivator.class);
 
 	/**
 	 * @see ModuleActivator#willRefreshContext()
