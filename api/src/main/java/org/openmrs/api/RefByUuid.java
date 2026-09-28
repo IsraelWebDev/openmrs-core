@@ -43,7 +43,7 @@ public interface RefByUuid {
 	 * @param uuid the UUID of the object to fetch
 	 * @param <T> the domain object type
 	 * @return the resolved domain object instance, or {@code null} if no matching object is found
-	 * @throws APIException if the type is not supported
+	 * @throws APIException if the type is not supported by this service, or is {@code null}
 	 */
 	<T> T getRefByUuid(Class<T> type, String uuid) throws APIException;
 
