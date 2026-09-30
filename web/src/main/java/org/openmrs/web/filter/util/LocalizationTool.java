@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.util.LocaleUtility;
@@ -34,6 +35,8 @@ public class LocalizationTool {
 	public static final String KEY = "l10n";
 
 	private static final Logger log = LoggerFactory.getLogger(LocalizationTool.class);
+
+	private static final Pattern LONE_APOSTROPHE = Pattern.compile("(?<!')'(?!')");
 
 	/**
 	 * The default message resource bundle to use, this is english
@@ -115,8 +118,22 @@ public class LocalizationTool {
 	}
 
 	/**
-	 * A message which renders to its localized text, formatted with {@link MessageFormat} using any
-	 * inserted arguments. A missing message renders as <code>???code???</code>.
+	 * Doubles each apostrophe that isn't already doubled, so that {@link MessageFormat} renders it
+	 * literally. Translations write apostrophes both ways: most as plain text, and some doubled as
+	 * Spring's {@link org.springframework.context.MessageSource} expects for messages with arguments.
+	 *
+	 * @param pattern the message text
+	 * @return the text with every apostrophe escaped for {@link MessageFormat}
+	 */
+	static String escapeApostrophes(String pattern) {
+		return LONE_APOSTROPHE.matcher(pattern).replaceAll("''");
+	}
+
+	/**
+	 * A message which renders to its localized text. Like Spring's
+	 * {@link org.springframework.context.MessageSource}, a message without arguments renders as-is, and
+	 * one with inserted arguments is formatted with {@link MessageFormat}, with apostrophes kept as
+	 * text. A missing message renders as <code>???code???</code>.
 	 */
 	public final class Message {
 
@@ -173,7 +190,11 @@ public class LocalizationTool {
 				log.warn("missing key: {}", code);
 				return "???" + code + "???";
 			}
-			return MessageFormat.format(String.valueOf(raw), args);
+			String text = String.valueOf(raw);
+			if (args == null || args.length == 0) {
+				return text;
+			}
+			return MessageFormat.format(escapeApostrophes(text), args);
 		}
 	}
 }

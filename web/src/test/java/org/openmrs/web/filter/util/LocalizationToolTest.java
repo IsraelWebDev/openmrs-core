@@ -39,6 +39,42 @@ class LocalizationToolTest {
 	}
 
 	/**
+	 * @see LocalizationTool#get(Object)
+	 */
+	@Test
+	void get_shouldKeepApostrophesInAMessageWithoutArguments() {
+		assertEquals("Admin passwords don't match", tool.get("install.error.adminPswdMatch").toString());
+	}
+
+	/**
+	 * @see LocalizationTool.Message#insert(Object)
+	 */
+	@Test
+	void insert_shouldKeepApostrophesAndFillInArgumentsThatFollowThem() {
+		LocalizationTool italian = new LocalizationTool(Locale.ITALIAN);
+
+		assertEquals("l'installazione guidata di OpenMRS 3.0.0",
+		    italian.get("install.header.caption").insert("3.0.0").toString());
+	}
+
+	/**
+	 * @see LocalizationTool.Message#insert(Object[])
+	 */
+	@Test
+	void insert_shouldRenderAMessageAsIsWhenNoArgumentsAreInserted() {
+		assertEquals("Admin passwords don't match",
+		    tool.get("install.error.adminPswdMatch").insert(new Object[0]).toString());
+	}
+
+	/**
+	 * @see LocalizationTool#escapeApostrophes(String)
+	 */
+	@Test
+	void escapeApostrophes_shouldDoubleLoneApostrophesAndKeepDoubledOnes() {
+		assertEquals("n''a {0} ''root'' l''x", LocalizationTool.escapeApostrophes("n'a {0} 'root' l''x"));
+	}
+
+	/**
 	 * @see LocalizationTool.Message#insert(Object[])
 	 */
 	@Test
